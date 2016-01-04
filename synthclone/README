@@ -1,0 +1,2 @@
+sudo pacman -S qtchooser
+export QT_SELECT=4
