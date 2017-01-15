@@ -1,0 +1,26 @@
+# Generate with pip2pkgbuild 0.2.3
+
+pkgbase=('python2-joblib')
+pkgname=('python2-joblib')
+_module='joblib'
+pkgver='0.10.3'
+pkgrel=1
+pkgdesc="Lightweight pipelining: using Python functions as pipeline jobs."
+url="http://pythonhosted.org/joblib/"
+depends=('python2')
+makedepends=('python2-setuptools')
+license=('BSD')
+arch=('any')
+source=("https://files.pythonhosted.org/packages/source/j/joblib/joblib-${pkgver}.tar.gz")
+md5sums=('455401ccfaf399538d8e5333086df2d3')
+
+build() {
+    cd "${srcdir}/${_module}-${pkgver}"
+    python2 setup.py build
+}
+
+package() {
+    depends+=()
+    cd "${srcdir}/${_module}-${pkgver}"
+    python2 setup.py install --root="${pkgdir}" --optimize=1 --skip-build
+}
