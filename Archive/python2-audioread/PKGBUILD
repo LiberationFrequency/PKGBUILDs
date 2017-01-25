@@ -1,0 +1,26 @@
+# Generate with pip2pkgbuild 0.2.3
+
+pkgbase=('python2-audioread')
+pkgname=('python2-audioread')
+_module='audioread'
+pkgver='2.1.4'
+pkgrel=1
+pkgdesc="multi-library, cross-platform audio decoding"
+url="https://github.com/sampsyo/audioread"
+depends=('python2')
+makedepends=('python2-setuptools')
+license=('MIT')
+arch=('any')
+source=("https://files.pythonhosted.org/packages/source/a/audioread/audioread-${pkgver}.tar.gz")
+md5sums=('8151d336c48ee2bc03fbcba5840a3fe4')
+
+build() {
+    cd "${srcdir}/${_module}-${pkgver}"
+    python2 setup.py build
+}
+
+package() {
+    depends+=()
+    cd "${srcdir}/${_module}-${pkgver}"
+    python2 setup.py install --root="${pkgdir}" --optimize=1 --skip-build
+}

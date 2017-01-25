@@ -1,0 +1,47 @@
+# $Id$
+# Maintainer: Ray Rashif <schiv@archlinux.org>
+# Contributor: Tobias Kieslich tobias [funnychar] archlinux org
+# Contributor: see .contrib
+## Package is flagged out of date. Temporary update to 4.3. Version 4.4: aubiomodule.c:272:16: Error: »AUBIO_LOG_ERR« not declared
+
+pkgname=aubio
+pkgver=0.4.3
+pkgrel=1
+pkgdesc="A tool for extracting annotations from audio signals"
+arch=('i686' 'x86_64')
+url="http://aubio.org/"
+license=('GPL')
+depends=('fftw' 'jack' 'ffmpeg')
+makedepends=('python2-numpy' 'python2-setuptools')
+optdepends=('python2-numpy: Python 2.x interface')
+source=("http://aubio.org/pub/$pkgname-$pkgver.tar.bz2")
+md5sums=('52a960cfc8a3e3125f3a258545d1c7e5')
+
+
+prepare() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  # python2 compat (for python interface)
+  sed -i 's:bin/env python:bin/env python2:' \
+      "$srcdir/$pkgname-$pkgver/python/lib/aubio/__init__.py"
+}
+
+build() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  python2 waf configure --prefix=/usr --enable-fftw3f --libdir=/usr/lib
+  python2 waf build $MAKEFLAGS
+  (python2 setup.py build) # python interface
+}
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  python2 waf --destdir="$pkgdir" install
+
+  # python interface
+  (python2 setup.py install --root="$pkgdir" --optimize=1)
+}
+
+# vim:set ts=2 sw=2 et:
+

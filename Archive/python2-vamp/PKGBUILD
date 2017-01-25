@@ -1,0 +1,25 @@
+# Generate with pip2pkgbuild 0.2.3pkgbase=('python2-vamp')
+
+pkgname=('python2-vamp')
+_module='vamp'
+pkgver='1.1.0'
+pkgrel=1
+pkgdesc="Use Vamp plugins for audio feature analysis."
+url="https://code.soundsoftware.ac.uk/projects/vampy-host"
+depends=('python2')
+makedepends=('python2-setuptools')
+license=('MIT')
+arch=('any')
+source=("https://files.pythonhosted.org/packages/source/v/vamp/vamp-${pkgver}.tar.gz")
+md5sums=('376ce0d17d18060c55ae6ebfdeb219e9')
+
+build() {
+    cd "${srcdir}/${_module}-${pkgver}"
+    python2 setup.py build
+}
+
+package() {
+    depends+=()
+    cd "${srcdir}/${_module}-${pkgver}"
+    python2 setup.py install --root="${pkgdir}" --optimize=1 --skip-build
+}

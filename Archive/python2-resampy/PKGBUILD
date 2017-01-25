@@ -1,0 +1,26 @@
+# Generate with pip2pkgbuild 0.2.3
+
+pkgbase=('python2-resampy')
+pkgname=('python2-resampy')
+_module='resampy'
+pkgver='0.1.4'
+pkgrel=1
+pkgdesc="Efficient signal resampling"
+url="https://github.com/bmcfee/resampy"
+depends=('python2')
+makedepends=('python2-setuptools')
+license=('custom:ISC License (ISCL)')
+arch=('any')
+source=("https://files.pythonhosted.org/packages/source/r/resampy/resampy-${pkgver}.tar.gz")
+md5sums=('cb413f93be03d0bebefad478d2b76e51')
+
+build() {
+    cd "${srcdir}/${_module}-${pkgver}"
+    python2 setup.py build
+}
+
+package() {
+    depends+=()
+    cd "${srcdir}/${_module}-${pkgver}"
+    python2 setup.py install --root="${pkgdir}" --optimize=1 --skip-build
+}
