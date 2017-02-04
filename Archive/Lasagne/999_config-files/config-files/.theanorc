@@ -1,0 +1,22 @@
+[global]
+floatX = float32
+#optimizer = fast_compile
+optimizer = None
+device = gpu
+#exception_verbosity = high
+#allow_gc = False
+
+#[cuda]
+#root = /opt/cuda
+
+#[lib]
+#cnmem = 1
+
+[nvcc]
+#compiler_bindir = /usr/bin
+#fastmath = true
+flags=-arch=sm_12
+#flags=-D_FORCE_INLINES -arch=sm_12
+
+
+
