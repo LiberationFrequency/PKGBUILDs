@@ -1,4 +1,4 @@
-# Install Lasagne Test on an old Lenovo B550   
+# Install Lasagne Test on an old Lenovo B550 for python 2.7 & 3.6    
 
 
 offizielle Pakete:  
@@ -62,6 +62,17 @@ https://aur.archlinux.org/packages/python-pygpu/
 https://aur.archlinux.org/packages/python-theano/  
 
 https://aur.archlinux.org/packages/pygpu2-git/  ???? not installed  
+
+    Fehler: Konnte den Vorgang nicht durchführen (In Konflikt stehende Dateien)   
+    pygpu2-git: /usr/bin/mako-render existiert im Dateisystem   
+    pygpu2-git: /usr/lib/python2.7/site-packages/easy-install.pth existiert im Dateisystem   
+    Fehler sind aufgetreten, keine Pakete wurden aktualisiert.   
+    
+    % pacman -Qo /usr/bin/mako-render                                                       :(
+      /usr/bin/mako-render ist in python-mako 1.0.6-2 enthalten    
+
+    % sudo pacman -U .... --force    
+
 
 Lasagne:  
 * my PKGBUILD and disable check  
@@ -265,6 +276,41 @@ http://deeplearning.net/software/theano/install.html#linux
 https://github.com/Lasagne/Lasagne/wiki/From-Zero-to-Lasagne-on-Ubuntu-14.04  
 https://groups.google.com/forum/#!msg/theano-dev/-8WCMn2FMR0/bJPasoZXaqoJ  
 http://osdf.github.io/blog/numpyscipy-with-openblas-for-ubuntu-1204-second-try.html  
+
+
+
+
+Go ahead:
+https://github.com/fdlm/chordrec  
+  
+Python 2 & 3:    
+https://aur.archlinux.org/packages/python2-sacred/  
+  
+sudo pacman -S python-yaml  
+sudo pacman -S python2-yaml  
+  
+mir_eval: own PKGBUILD generated with pip2pkgbuild   
+  
+librosa: own PKGBUILD generated with pip2pkgbuild  
+  
+madmom: own PKGBUILD generated with pip2pkgbuild  
+  
+python2-nn: own PKGBUILD    
+  
+python2-dmgr: own PKGBUILD     
+  
+python2-spaghetti: own PKGBUILD / something went wrong / fix it! / temporary cp it manually     
+* % cd .../019_python2-spaghetti/src/python2-spaghetti  
+* % sudo cp -R spaghetti /usr/lib/python2.7/site-packages/     
+
+Clone the chordrec repository and add its path to the $PYTHONPATH environment variable.  
+% mkdir chordrecKI    
+% git clone https://github.com/fdlm/chordrec.git    
+  % export PYTHONPATH=/home/che3po/chordrecKI/chordrec    
+* add it to .zshprofile    
+
+
+
 
 
 

@@ -1,0 +1,25 @@
+# Maintainer: LiberationFrequency
+
+pkgname=python2-nn
+pkgver=r33.e972135
+pkgrel=1
+pkgdesc="Tools for training Lasagne neural networks"
+arch=('any')
+url="https://github.com/fdlm/nn"
+license=('MIT')
+depends=()
+source=('python2-nn::git+https://github.com/fdlm/nn.git')
+md5sums=('SKIP')
+makedepends=('git' 'python2-setuptools')
+provides=('python2-nn')
+
+pkgver() {
+	cd "$srcdir"/python2-nn
+	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+package() {
+  cd "$srcdir/$pkgname"
+  python2 setup.py install --root="$pkgdir/" --optimize=1
+}
+

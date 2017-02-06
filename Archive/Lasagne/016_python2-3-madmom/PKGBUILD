@@ -1,0 +1,39 @@
+# generated with pip2pkgbuild 0.2.3
+
+pkgbase=('madmom')
+pkgname=('python-madmom' 'python2-madmom')
+_module='madmom'
+pkgver='0.14.1'
+pkgrel=1
+pkgdesc="Python audio signal processing library"
+url="https://github.com/CPJKU/madmom"
+depends=('python2' 'python2-numpy' 'python2-scipy' 'cython2' 'python2-nose' 'python' 'python-numpy' 'python-scipy' 'cython' 'python-nose')
+makedepends=('python-setuptools' 'python2-setuptools')
+license=('custom:Free for non-commercial use')
+arch=('any')
+source=("https://files.pythonhosted.org/packages/source/m/madmom/madmom-${pkgver}.tar.gz")
+md5sums=('8b80d8992444216e244e1300a7cdfaae')
+
+prepare() {
+    cp -a "${srcdir}/${_module}-${pkgver}"{,-python2}
+}
+
+build() {
+    cd "${srcdir}/${_module}-${pkgver}"
+    python setup.py build
+
+    cd "${srcdir}/${_module}-${pkgver}-python2"
+    python2 setup.py build
+}
+
+package_python-madmom() {
+    depends+=('python')
+    cd "${srcdir}/${_module}-${pkgver}"
+    python setup.py install --root="${pkgdir}" --optimize=1 --skip-build
+}
+
+package_python2-madmom() {
+    depends+=('python2')
+    cd "${srcdir}/${_module}-${pkgver}-python2"
+    python2 setup.py install --root="${pkgdir}" --optimize=1 --skip-build
+}

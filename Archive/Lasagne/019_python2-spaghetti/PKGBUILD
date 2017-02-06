@@ -1,0 +1,26 @@
+# Maintainer: LiberationFrequency
+
+pkgname=python2-spaghetti
+pkgver=0.1dev
+pkgrel=1
+pkgdesc="Data manager for training Lasagne neural networks"
+arch=('any')
+url="https://github.com/fdlm/Spaghetti"
+license=('MIT')
+depends=()
+source=('python2-spaghetti::git+https://github.com/fdlm/Spaghetti.git')
+md5sums=('SKIP')
+makedepends=('git' 'python2-setuptools')
+#provides=('python2-spaghetti')
+provides=('spaghetti')
+
+pkgver() {
+	cd "$srcdir"/python2-spaghetti
+	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+package() {
+  cd "$srcdir/$pkgname"
+  python2 setup.py install --root="$pkgdir/" --optimize=1
+}
+

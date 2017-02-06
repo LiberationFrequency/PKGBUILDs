@@ -1,0 +1,39 @@
+# generated with pip2pkgbuild 0.2.3
+
+pkgbase=('mir-eval')
+pkgname=('python-mir_eval' 'python2-mir_eval')
+_module='mir_eval'
+pkgver='0.4'
+pkgrel=1
+pkgdesc="Common metrics for common audio/music processing tasks."
+url="https://github.com/craffel/mir_eval"
+depends=()
+makedepends=('python-setuptools' 'python2-setuptools')
+license=('MIT')
+arch=('any')
+source=("https://files.pythonhosted.org/packages/source/m/mir_eval/mir_eval-${pkgver}.tar.gz")
+md5sums=('f357b8ec445ec0016024e1e79e4128b4')
+
+prepare() {
+    cp -a "${srcdir}/${_module}-${pkgver}"{,-python2}
+}
+
+build() {
+    cd "${srcdir}/${_module}-${pkgver}"
+    python setup.py build
+
+    cd "${srcdir}/${_module}-${pkgver}-python2"
+    python2 setup.py build
+}
+
+package_python-mir_eval() {
+    depends+=('python')
+    cd "${srcdir}/${_module}-${pkgver}"
+    python setup.py install --root="${pkgdir}" --optimize=1 --skip-build
+}
+
+package_python2-mir_eval() {
+    depends+=('python2')
+    cd "${srcdir}/${_module}-${pkgver}-python2"
+    python2 setup.py install --root="${pkgdir}" --optimize=1 --skip-build
+}

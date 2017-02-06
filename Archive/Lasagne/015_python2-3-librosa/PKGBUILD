@@ -1,0 +1,39 @@
+# generated with pip2pkgbuild 0.2.3
+
+pkgbase=('librosa')
+pkgname=('python-librosa' 'python2-librosa')
+_module='librosa'
+pkgver='0.4.3'
+pkgrel=1
+pkgdesc="Python module for audio and music processing"
+url="http://librosa.github.io/"
+depends=()
+makedepends=('python-setuptools' 'python2-setuptools')
+license=('custom:ISC License (ISCL)')
+arch=('any')
+source=("https://files.pythonhosted.org/packages/source/l/librosa/librosa-${pkgver}.tar.gz")
+md5sums=('2431f370c5f2c056d039355908077398')
+
+prepare() {
+    cp -a "${srcdir}/${_module}-${pkgver}"{,-python2}
+}
+
+build() {
+    cd "${srcdir}/${_module}-${pkgver}"
+    python setup.py build
+
+    cd "${srcdir}/${_module}-${pkgver}-python2"
+    python2 setup.py build
+}
+
+package_python-librosa() {
+    depends+=('python')
+    cd "${srcdir}/${_module}-${pkgver}"
+    python setup.py install --root="${pkgdir}" --optimize=1 --skip-build
+}
+
+package_python2-librosa() {
+    depends+=('python2')
+    cd "${srcdir}/${_module}-${pkgver}-python2"
+    python2 setup.py install --root="${pkgdir}" --optimize=1 --skip-build
+}
