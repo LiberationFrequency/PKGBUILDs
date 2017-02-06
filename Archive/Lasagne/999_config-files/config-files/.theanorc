@@ -1,22 +1,23 @@
 [global]
+mode = FAST_RUN
+device = cpu
 floatX = float32
 #optimizer = fast_compile
-optimizer = None
-device = gpu
+#optimizer = None
 #exception_verbosity = high
-#allow_gc = False
+allow_gc = False
 
-#[cuda]
-#root = /opt/cuda
+[blas]
+python ldflags = -L/usr/lib64 -lopenblas
+
+[cuda]
+root = /opt/cuda
 
 #[lib]
 #cnmem = 1
 
 [nvcc]
-#compiler_bindir = /usr/bin
-#fastmath = true
-flags=-arch=sm_12
-#flags=-D_FORCE_INLINES -arch=sm_12
-
-
-
+compiler_bindir = /opt/cuda/bin
+fastmath = true
+#flags=-arch=sm_12
+flags=-D_FORCE_INLINES -arch=sm_12
