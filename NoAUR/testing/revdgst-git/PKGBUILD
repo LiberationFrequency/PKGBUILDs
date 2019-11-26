@@ -1,0 +1,38 @@
+# Maintainer: LiberationFrequency
+# MyVersion: 0.00.001 alpha
+pkgname=revdgst-git
+pkgver=0.0.1.r5.gb1d7226
+pkgrel=1
+pkgdesc="Collection of various tools to analyze and reverse engineer checksums in short data packets."
+arch=('x86_64')
+license=('GPL')
+depends=()
+makedepends=('git' 'gcc' 'cmake')
+optdepends=()
+provides=('revdgst')
+conflicts=('revdgst')
+url="https://github.com/triq-org/revdgst"
+source=('git://github.com/triq-org/revdgst.git')
+md5sums=('SKIP')
+
+_gitname=revdgst
+
+pkgver() {
+	cd $srcdir/$_gitname
+        printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+
+}
+
+build() {
+	cd $srcdir/$_gitname
+	pwd
+	mkdir -p build
+	cd build
+	cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+	make
+}
+
+package() {
+	cd $srcdir/$_gitname/build
+	make DESTDIR=$pkgdir install
+}
