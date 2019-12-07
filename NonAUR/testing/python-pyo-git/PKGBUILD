@@ -1,0 +1,56 @@
+# taken over by LiberationFrequency 
+# moved to git repo master branch 
+
+# based on:
+# Maintainer: Carlo Capocasa <carlo@capocasa.net>
+# Maintainer: Peter Sutton <peter@foxdogstudios.com>
+# Contributor: amiguet <contact at matthieuamiguet dot ch>
+# Based on python2-pyo by amiguet
+
+pkgname=python-pyo-git
+pkgver=1.0.1.r2008.g6d101f4
+pkgrel=1
+pkgdesc="A Python module written in C to help digital signal processing script creation."
+arch=('i686' 'x86_64')
+url="https://github.com/belangeo/pyo"
+license=('GPL')
+depends=('git' 'python' 'portmidi' 'portaudio' 'liblo' 'libsndfile')
+optdepends=('wxpython: wxWidgets GUI')
+provides=("pyo=$pkgver" "python-pyo=$pkgver")
+conflicts=('pyo')
+source=("git://github.com/belangeo/pyo.git")
+md5sums=('SKIP')
+
+export PYTHON=python
+
+_gitname=pyo
+
+pkgver() {
+	cd $srcdir/$_gitname
+        printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+
+}
+
+build() {
+  cd "$srcdir/pyo"
+
+  $PYTHON setup.py build --use-double --use-jack
+}
+
+package() {
+  cd "$srcdir/pyo"
+  $PYTHON setup.py install --use-double \
+                           --use-jack \
+                           --root="$pkgdir/"
+
+  # examples
+  install -d "$pkgdir/usr/share/$pkgname"
+  cp -a pyo/examples  "$pkgdir/usr/share/$pkgname"
+
+  # docs
+  #install -d "$pkgdir/usr/share/doc/$pkgname"
+  #cp -a ../pyo/doc/* "$pkgdir/usr/share/doc/$pkgname"
+
+  # python2 fix
+  #sed -i "s|env python|&2|g" `grep -rl "env python" "$pkgdir"`
+}
