@@ -1,0 +1,33 @@
+# Maintainer: LibreFreq (sorry@dontbugme.now)
+# MyVersion: 0.00.001 alpha
+
+pkgname=retrogram-rtlsdr-git
+_gitname=retrogram-rtlsdr
+pkgver=r6.g91dd79e
+pkgrel=0.1
+pkgdesc="Spectrum analyzer on your terminal/ssh console with ASCII art ~ RTLSDR"
+arch=('x86_64' 'aarch64')
+license=('none')
+depends=('rtl-sdr-librtlsdr-git' 'ncurses' 'boost' 'boost-libs')
+makedepends=('git' 'gcc')
+optdepends=()
+provides=('retrogram-rtlsdr')
+conflicts=('retrogram-rtlsdr')
+url="https://github.com/r4d10n/retrogram-rtlsdr"
+source=('git://github.com/r4d10n/retrogram-rtlsdr')
+md5sums=('SKIP')
+
+pkgver() {
+	cd $srcdir/$_gitname
+        printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+	cd $srcdir/$_gitname
+	make
+}
+
+package() {
+	cd $srcdir/$_gitname
+	install -D ./retrogram-rtlsdr "${pkgdir}/usr/bin/retrogram-rtlsdr"
+}
